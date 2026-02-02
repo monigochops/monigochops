@@ -1,0 +1,280 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  padding-top: 80px; /* espacio para el header fijo */
+  line-height: 1.6;
+}
+
+/* CONTAINER */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* HEADER COMPACTO Y FIJO */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+  transition: box-shadow 0.3s, padding 0.3s;
+  padding: 0.5rem 0; /* compacto */
+  height: 60px; /* alto máximo fijo */
+  display: flex;
+  align-items: center;
+}
+.header.scrolled {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.logo {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #f94144;
+}
+.nav a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav a:hover { color: #f94144; }
+.btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  background: #f94144;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform 0.3s, background 0.3s;
+  display: inline-block;
+  cursor: pointer;
+}
+.btn:hover { transform: scale(1.05); background: #f3722c; }
+
+/* HERO */
+.hero {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #f94144, #f3722c, #f8961e);
+}
+.hero h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+/* SECCIONES */
+.section { padding: 5rem 0; }
+h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
+
+/* SERVICIOS */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.service-card {
+  background: #fff;
+  padding: 2rem 1rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.service-card:hover { transform: translateY(-10px); box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+.service-card img { width: 100%; border-radius: 15px; margin-bottom: 1rem; }
+.service-card h3 { color: #f94144; margin-bottom: .5rem; }
+.service-card p { font-size: .95rem; color: #555; }
+
+/* TIENDA */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: visible; /* IMPORTANTE: el zoom no se recorta */
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative; /* para VENDIDO / overlays */
+}
+.product-card:hover { transform: translateY(-10px); box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+/* ==========================================
+   MINIATURAS + ZOOM POR IMAGEN (ACTUALIZADO)
+   - soporte para varias fotos por producto
+   - soporte también para <img> sueltas sin wrapper
+   ========================================== */
+
+/* Contenedor de miniaturas cuando existe .img-wrapper */
+.img-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 12px 0 12px;
+  overflow: visible; /* permite que el zoom salga fuera */
+}
+
+/* MINIATURA: afecta a imgs dentro de .img-wrapper y a imgs sueltas dentro de .product-card */
+.product-card .img-wrapper img,
+.product-card > img{
+  width: 78px;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: inline-block;
+  margin: 8px 6px 0 6px;
+
+  cursor: zoom-in;
+  position: relative;
+  z-index: 1;
+
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+  transform-origin: center;
+  will-change: transform;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* ZOOM GRANDE SOLO EN LA IMAGEN QUE HACES HOVER */
+.product-card .img-wrapper img:hover,
+.product-card > img:hover{
+  transform: scale(4.0); /* aumento considerable */
+  z-index: 9999;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.40);
+  filter: saturate(1.15) contrast(1.12);
+  cursor: zoom-out;
+}
+
+/* En móvil/tablet, reducimos el zoom para que no sea molesto */
+@media (max-width: 768px){
+  .product-card .img-wrapper img:hover,
+  .product-card > img:hover{
+    transform: scale(2.2);
+  }
+}
+
+/* ========================================== */
+
+.product-card h3 { color: #f94144; margin: 1rem 0 .5rem; }
+.product-card p { font-weight: 600; margin-bottom: 1rem; }
+
+.add-cart {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 30px;
+  background: #43aa8b;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+.add-cart:hover { transform: scale(1.05); background: #388e75; }
+
+/* CARRITO */
+.cart {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 400px;
+  margin: 2rem auto 0 auto;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+}
+#cart-items { list-style: none; margin-bottom: 1rem; }
+#cart-items li { margin-bottom: .5rem; }
+#clear-cart { background: #f94144; margin-top: .5rem; border: none; }
+#clear-cart:hover { background: #f3722c; }
+#checkout-whatsapp { margin-top: .75rem; border: none; }
+
+/* TESTIMONIOS */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.testimonial-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  font-style: italic;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+/* FORMULARIO */
+form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+input, textarea {
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+textarea { resize: vertical; min-height: 120px; }
+form button { align-self: flex-start; }
+
+/* BOTONES CONTACTO */
+.contact-actions{
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-whatsapp{
+  background: #25D366;
+}
+.btn-whatsapp:hover{
+  background: #1ebe57;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  background: #f6f6f6;
+  color: #666;
+  margin-top: 3rem;
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .store-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width:768px){
+  .header { flex-direction: column; height: auto; padding: 0.5rem 0; }
+  .nav a { margin-left: 0.8rem; }
+  .store-grid { grid-template-columns: 1fr; }
+}
