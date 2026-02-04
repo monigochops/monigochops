@@ -55,6 +55,21 @@ body {
 }
 .nav a:hover { color: #f94144; }
 
+/* BOTÓN GENERAL (por si lo usas en CTA / contacto) */
+.btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  background: #f94144;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform 0.3s, background 0.3s;
+  display: inline-block;
+  cursor: pointer;
+}
+.btn:hover { transform: scale(1.05); background: #f3722c; }
+
 /* HERO */
 .hero {
   color: #fff;
@@ -62,6 +77,8 @@ body {
   padding: 6rem 0;
   background: linear-gradient(135deg, #f94144, #f3722c, #f8961e);
 }
+.hero h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 
 /* SECCIONES */
 .section { padding: 5rem 0; }
@@ -75,31 +92,47 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 }
+
 .service-card {
   background: #fff;
   padding: 2rem 1rem;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 8px 25px rgba(0,0,0,.1);
-  overflow: visible;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: visible; /* para que el zoom no se corte */
 }
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.15);
+}
+
 .service-card img {
   width: 100%;
   border-radius: 15px;
   margin-bottom: 1rem;
 
   cursor: zoom-in;
+  position: relative;
+  z-index: 1;
   transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
   transform-origin: center;
+  will-change: transform;
+  filter: saturate(1.05) contrast(1.05);
+  outline: none;
 }
+
+/* ZOOM PC en servicios (mismo concepto que productos) */
 .service-card img:hover {
   transform: scale(2.5);
   z-index: 9999;
   box-shadow: 0 18px 60px rgba(0,0,0,0.35);
   filter: saturate(1.15) contrast(1.12);
+  cursor: zoom-out;
 }
 
-/* TAP EN MÓVIL */
+/* TAP EN MÓVIL/TABLET para servicios */
 @media (hover: none), (pointer: coarse){
   .service-card img:active,
   .service-card img:focus-visible{
@@ -107,8 +140,12 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
     z-index: 9999;
     box-shadow: 0 18px 60px rgba(0,0,0,0.35);
     filter: saturate(1.15) contrast(1.12);
+    cursor: zoom-out;
   }
 }
+
+.service-card h3 { color: #f94144; margin-bottom: .5rem; }
+.service-card p { font-size: .95rem; color: #555; }
 
 /* ===============================
    TIENDA – SIEMPRE 4 COLUMNAS
@@ -117,15 +154,22 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .product-card {
   background: #fff;
   border-radius: 20px;
-  overflow: visible;
+  overflow: visible; /* el zoom no se recorta */
   text-align: center;
   box-shadow: 0 8px 25px rgba(0,0,0,.1);
+  transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.15);
 }
 
 /* MINIATURAS */
@@ -134,7 +178,9 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  padding: 12px;
+  align-items: center;
+  padding: 12px 12px 0 12px;
+  overflow: visible;
 }
 
 .product-card .img-wrapper img,
@@ -143,8 +189,18 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   height: 78px;
   object-fit: cover;
   border-radius: 12px;
+  display: inline-block;
+  margin: 8px 6px 0 6px;
+
   cursor: zoom-in;
+  position: relative;
+  z-index: 1;
+
   transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+  transform-origin: center;
+  will-change: transform;
+  filter: saturate(1.05) contrast(1.05);
+  outline: none;
 }
 
 /* ZOOM PC */
@@ -152,11 +208,12 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
 .product-card > img:hover{
   transform: scale(7);
   z-index: 9999;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.40);
   filter: saturate(1.15) contrast(1.12);
+  cursor: zoom-out;
 }
 
-/* ZOOM MÓVIL */
+/* ZOOM MÓVIL/TABLET (tap) */
 @media (hover: none), (pointer: coarse){
   .product-card .img-wrapper img:active,
   .product-card > img:active,
@@ -164,9 +221,91 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   .product-card > img:focus-visible{
     transform: scale(7);
     z-index: 9999;
-    box-shadow: 0 18px 60px rgba(0,0,0,0.4);
+    box-shadow: 0 18px 60px rgba(0,0,0,0.40);
     filter: saturate(1.15) contrast(1.12);
+    cursor: zoom-out;
   }
+}
+
+/* RESTO DE TIENDA (lo que te faltaba y NO hay que perder) */
+.product-card h3 { color: #f94144; margin: 1rem 0 .5rem; }
+.product-card p { font-weight: 600; margin-bottom: 1rem; }
+
+.add-cart {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 30px;
+  background: #43aa8b;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+.add-cart:hover { transform: scale(1.05); background: #388e75; }
+
+/* CARRITO */
+.cart {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 400px;
+  margin: 2rem auto 0 auto;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+}
+#cart-items { list-style: none; margin-bottom: 1rem; }
+#cart-items li { margin-bottom: .5rem; }
+#clear-cart { background: #f94144; margin-top: .5rem; border: none; }
+#clear-cart:hover { background: #f3722c; }
+#checkout-whatsapp { margin-top: .75rem; border: none; }
+
+/* TESTIMONIOS */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.testimonial-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  font-style: italic;
+  box-shadow: 0 8px 25px rgba(0,0,0,.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+/* FORMULARIO */
+form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+input, textarea {
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+textarea { resize: vertical; min-height: 120px; }
+form button { align-self: flex-start; }
+
+/* BOTONES CONTACTO */
+.contact-actions{
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-whatsapp{
+  background: #25D366;
+}
+.btn-whatsapp:hover{
+  background: #1ebe57;
 }
 
 /* FOOTER */
@@ -175,4 +314,8 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   padding: 2rem;
   background: #f6f6f6;
   color: #666;
+  margin-top: 3rem;
 }
+
+/* RESPONSIVE */
+/* No tocamos columnas: deben ser SIEMPRE 4, así que no hay media queries que las cambien */
