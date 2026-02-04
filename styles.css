@@ -163,7 +163,7 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
 /* ZOOM GRANDE SOLO EN LA IMAGEN QUE HACES HOVER */
 .product-card .img-wrapper img:hover,
 .product-card > img:hover{
-  transform: scale(4.0); /* aumento considerable */
+  transform: scale(7.0); /* aumento considerable */
   z-index: 9999;
   box-shadow: 0 18px 60px rgba(0,0,0,0.40);
   filter: saturate(1.15) contrast(1.12);
