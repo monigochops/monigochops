@@ -90,7 +90,7 @@ function updateCart() {
     total += item.price;
   });
 
-  cartTotalEl.textContent = total; // el HTML muestra "$", no lo tocamos
+  cartTotalEl.textContent = total;
   saveState();
 }
 
@@ -112,7 +112,6 @@ addBtns.forEach(btn => {
 
     btn.textContent = "✔ Añadido";
     setTimeout(()=> {
-      // Si se marcó vendido por otra acción, no lo pisa
       if (!soldIds.has(id)) btn.textContent = "Añadir al carrito";
     }, 800);
   });
@@ -170,13 +169,12 @@ function openWhatsAppWithText(text) {
 }
 
 function markCartItemsAsSold() {
-  // Marcar como vendido todos los ids del carrito
   cart.forEach(item => soldIds.add(item.id));
   saveState();
   applySoldToAllCards();
 }
 
-// Finalizar pedido por WhatsApp (factura + marcar vendidos + vaciar carrito)
+// Finalizar pedido por WhatsApp
 checkoutWhatsAppBtn.addEventListener('click', () => {
   if (!cart.length) {
     alert('Tu carrito está vacío.');
@@ -186,10 +184,8 @@ checkoutWhatsAppBtn.addEventListener('click', () => {
   const orderId = generateOrderId();
   const text = buildWhatsAppInvoiceText(orderId);
 
-  // Abre WhatsApp con factura
   openWhatsAppWithText(text);
 
-  // Marcar vendidos y vaciar carrito (según tu punto 9.a)
   markCartItemsAsSold();
   cart = [];
   updateCart();
@@ -228,3 +224,88 @@ if (contactForm) {
 loadState();
 updateCart();
 applySoldToAllCards();
+
+
+// =====================================================
+//  LIGHTBOX (Opción B) para DISEÑOS + TIENDA (imágenes)
+//  - No toca tu HTML: crea el overlay vía JS
+// =====================================================
+
+(function initMonigochopsLightbox(){
+  // Crea overlay una sola vez
+  const overlay = document.createElement('div');
+  overlay.className = 'mc-lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Vista ampliada');
+
+  overlay.innerHTML = `
+    <div class="mc-lightbox__panel" tabindex="-1">
+      <button class="mc-lightbox__close" type="button" aria-label="Cerrar">×</button>
+      <img class="mc-lightbox__img" alt="">
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const panel = overlay.querySelector('.mc-lightbox__panel');
+  const imgEl = overlay.querySelector('.mc-lightbox__img');
+  const closeBtn = overlay.querySelector('.mc-lightbox__close');
+
+  let lastActiveEl = null;
+
+  function open(src, altText){
+    if (!src) return;
+
+    lastActiveEl = document.activeElement;
+    imgEl.src = src;
+    imgEl.alt = altText || 'Imagen ampliada';
+
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    // foco para ESC / accesibilidad
+    setTimeout(() => panel.focus(), 0);
+  }
+
+  function close(){
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+
+    // limpiar para evitar flashes de imagen anterior
+    imgEl.src = '';
+
+    if (lastActiveEl && typeof lastActiveEl.focus === 'function') {
+      lastActiveEl.focus();
+    }
+  }
+
+  // Cerrar: click fuera o botón
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  closeBtn.addEventListener('click', close);
+
+  // Cerrar con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
+  });
+
+  // Delegación de eventos: DISEÑOS + TIENDA
+  // - Captura clicks en imágenes sin tocar estructura
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!(target instanceof HTMLElement)) return;
+
+    const isDesignImg = target.matches('.service-card img');
+    const isStoreImg = target.matches('.product-card .img-wrapper img, .product-card > img');
+
+    if (!isDesignImg && !isStoreImg) return;
+
+    const src = target.getAttribute('src');
+    const alt = target.getAttribute('alt') || '';
+
+    // evita comportamientos raros en móviles/drag
+    e.preventDefault();
+    open(src, alt);
+  }, { passive: false });
+})();
