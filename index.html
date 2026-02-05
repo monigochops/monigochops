@@ -7,15 +7,15 @@
   <title>Monigochops | Ropa urbana y camisetas oversize</title>
 
   <!-- SEO básico -->
-<meta name="description" content="Monigochops: ropa urbana seleccionada, camisetas oversize y prendas únicas. Compra directa por WhatsApp y Bizum. Envíos a toda España.">
-<meta name="robots" content="index, follow">
+  <meta name="description" content="Monigochops: ropa urbana seleccionada, camisetas oversize y prendas únicas. Compra directa por WhatsApp y Bizum. Envíos a toda España.">
+  <meta name="robots" content="index, follow">
 
-<!-- Open Graph (redes sociales) -->
-<meta property="og:title" content="Monigochops | Ropa urbana y camisetas oversize">
-<meta property="og:description" content="Ropa urbana seleccionada. Camisetas oversize y prendas únicas. Compra fácil por WhatsApp y Bizum.">
-<meta property="og:url" content="https://monigochops.com/">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://monigochops.com/imagenes/logo.jpg">
+  <!-- Open Graph (redes sociales) -->
+  <meta property="og:title" content="Monigochops | Ropa urbana y camisetas oversize">
+  <meta property="og:description" content="Ropa urbana seleccionada. Camisetas oversize y prendas únicas. Compra fácil por WhatsApp y Bizum.">
+  <meta property="og:url" content="https://monigochops.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://monigochops.com/imagenes/logo.jpg">
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -30,7 +30,7 @@
       <a href="#hero">Inicio</a>
       <a href="#services">Servicios</a>
       <a href="#store">Tienda</a>
-      <a href="#testimonials"></a>
+      <!-- <a href="#testimonials"></a> -->
       <a href="#contact" class="btn btn-primary">Contacto</a>
       <a class="btn btn-whatsapp"
         href="https://wa.me/34662283283?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n."
@@ -45,10 +45,17 @@
 <!-- HERO -->
 <section id="hero" class="hero">
   <div class="hero-bg"></div>
+
+  <!-- ✅ NUEVO: VIDEO DE FONDO (detrás del logo y texto) -->
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+    <source src="imagenes/video_ropero.mp4" type="video/mp4">
+  </video>
+
   <div class="container hero-content">
     <img src="imagenes/logo.jpg"><br>
     <h1>Bienvenido a Monigochops</h1>
-    <p>Productos de calidad y servicios profesionales para tu negocio.</p>
+    <p>Productos de calidad. <br> Los diseños son de creación propia, puedes elegir alguno de los existentes en esta pagina para diseñar tu camiseta, <br>
+      o trasladarme tu idea y yo la hago realidad.</p>
     <a href="#store" class="btn btn-primary btn-lg">Ver Productos</a>
   </div>
 </section>
@@ -56,7 +63,7 @@
 <!-- SERVICIOS -->
 <section id="services" class="section services">
   <div class="container">
-    <h2>ALGUNOS DISEÑOS</h2>
+    <h2>DISEÑOS</h2>
     <div class="services-grid">
       <div class="service-card">
         <img src="imagenes/explore the world color.jpg" alt="Servicio 1">
@@ -139,9 +146,6 @@
         <h3>Oido cocina</h3>
         <p>      </p>  
       </div>
-
-
-      
     </div>
   </div>
 </section>
@@ -493,3 +497,4 @@ esto serian los comentarios, pero solo los podria ver yo, por eso los meto dentr
 <script src="script.js"></script>
 </body>
 </html>
+
