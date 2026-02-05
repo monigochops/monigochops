@@ -85,7 +85,7 @@ body {
 h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
 
 /* ===============================
-   SERVICIOS – SIEMPRE 4 COLUMNAS
+   SERVICIOS – 4 COLUMNAS
    =============================== */
 .services-grid {
   display: grid;
@@ -100,7 +100,7 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   text-align: center;
   box-shadow: 0 8px 25px rgba(0,0,0,.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  overflow: visible; /* para que el zoom no se corte */
+  overflow: visible;
 }
 
 .service-card:hover {
@@ -108,47 +108,40 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   box-shadow: 0 12px 30px rgba(0,0,0,.15);
 }
 
+/* ✅ DISEÑOS: imagen completa, sin recorte */
 .service-card img {
   width: 100%;
+  height: auto;
+  max-height: 210px;      /* ajusta si quieres más/menos alto */
+  object-fit: contain;    /* clave: se ve completa */
+  background: #fff;
   border-radius: 15px;
   margin-bottom: 1rem;
 
   cursor: zoom-in;
   position: relative;
   z-index: 1;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-  transform-origin: center;
-  will-change: transform;
+  transition: filter 0.22s ease;
   filter: saturate(1.05) contrast(1.05);
   outline: none;
 }
 
-/* ZOOM PC en servicios (mismo concepto que productos) */
-.service-card img:hover {
-  transform: scale(2.5);
-  z-index: 9999;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
-  filter: saturate(1.15) contrast(1.12);
-  cursor: zoom-out;
+/* ❌ Desactivamos el zoom inline: ahora hay lightbox (B) */
+.service-card img:hover,
+.service-card img:active,
+.service-card img:focus-visible{
+  transform: none !important;
+  box-shadow: none !important;
 }
 
-/* TAP EN MÓVIL/TABLET para servicios */
-@media (hover: none), (pointer: coarse){
-  .service-card img:active,
-  .service-card img:focus-visible{
-    transform: scale(2.5);
-    z-index: 9999;
-    box-shadow: 0 18px 60px rgba(0,0,0,0.35);
-    filter: saturate(1.15) contrast(1.12);
-    cursor: zoom-out;
-  }
-}
+/* Un poquito de feedback visual al hover */
+.service-card img:hover { filter: saturate(1.12) contrast(1.08); }
 
 .service-card h3 { color: #f94144; margin-bottom: .5rem; }
 .service-card p { font-size: .95rem; color: #555; }
 
 /* ===============================
-   TIENDA – SIEMPRE 4 COLUMNAS
+   TIENDA – 4 COLUMNAS
    =============================== */
 .store-grid {
   display: grid;
@@ -160,7 +153,7 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
 .product-card {
   background: #fff;
   border-radius: 20px;
-  overflow: visible; /* el zoom no se recorta */
+  overflow: visible;
   text-align: center;
   box-shadow: 0 8px 25px rgba(0,0,0,.1);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -196,38 +189,28 @@ h2 { text-align: center; margin-bottom: 2rem; color: #f94144; }
   position: relative;
   z-index: 1;
 
-  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-  transform-origin: center;
-  will-change: transform;
+  transition: filter 0.22s ease;
   filter: saturate(1.05) contrast(1.05);
   outline: none;
 }
 
-/* ZOOM PC */
+/* ❌ Desactivamos el zoom inline: ahora hay lightbox (B) */
+.product-card .img-wrapper img:hover,
+.product-card > img:hover,
+.product-card .img-wrapper img:active,
+.product-card > img:active,
+.product-card .img-wrapper img:focus-visible,
+.product-card > img:focus-visible{
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .product-card .img-wrapper img:hover,
 .product-card > img:hover{
-  transform: scale(7);
-  z-index: 9999;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.40);
-  filter: saturate(1.15) contrast(1.12);
-  cursor: zoom-out;
+  filter: saturate(1.12) contrast(1.08);
 }
 
-/* ZOOM MÓVIL/TABLET (tap) */
-@media (hover: none), (pointer: coarse){
-  .product-card .img-wrapper img:active,
-  .product-card > img:active,
-  .product-card .img-wrapper img:focus-visible,
-  .product-card > img:focus-visible{
-    transform: scale(7);
-    z-index: 9999;
-    box-shadow: 0 18px 60px rgba(0,0,0,0.40);
-    filter: saturate(1.15) contrast(1.12);
-    cursor: zoom-out;
-  }
-}
-
-/* RESTO DE TIENDA (lo que te faltaba y NO hay que perder) */
+/* RESTO DE TIENDA */
 .product-card h3 { color: #f94144; margin: 1rem 0 .5rem; }
 .product-card p { font-weight: 600; margin-bottom: 1rem; }
 
@@ -301,12 +284,8 @@ form button { align-self: flex-start; }
   align-items: center;
 }
 
-.btn-whatsapp{
-  background: #25D366;
-}
-.btn-whatsapp:hover{
-  background: #1ebe57;
-}
+.btn-whatsapp{ background: #25D366; }
+.btn-whatsapp:hover{ background: #1ebe57; }
 
 /* FOOTER */
 .footer {
@@ -317,5 +296,80 @@ form button { align-self: flex-start; }
   margin-top: 3rem;
 }
 
-/* RESPONSIVE */
-/* No tocamos columnas: deben ser SIEMPRE 4, así que no hay media queries que las cambien */
+/* ✅ Responsive: servicios se comporta como tienda en móvil */
+@media (max-width: 768px){
+  .services-grid,
+  .store-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  /* en móvil, que los diseños no se queden enanos */
+  .service-card{
+    padding: 1.2rem 0.8rem;
+  }
+  .service-card img{
+    max-height: 180px;
+  }
+}
+
+/* ===============================
+   LIGHTBOX (opción B)
+   =============================== */
+.mc-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: none;           /* se activa por JS */
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(2px);
+}
+
+.mc-lightbox.is-open { display: flex; }
+
+.mc-lightbox__panel{
+  position: relative;
+  width: min(92vw, 980px);
+  max-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-lightbox__img{
+  width: 100%;
+  height: auto;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+  background: #111;
+}
+
+.mc-lightbox__close{
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.92);
+  color: #111;
+  font-size: 22px;
+  line-height: 44px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 480px){
+  .mc-lightbox{ padding: 12px; }
+  .mc-lightbox__close{
+    top: -10px;
+    right: -6px;
+  }
+}
