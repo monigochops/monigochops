@@ -325,6 +325,23 @@ if (contactForm) {
   const prevBtn = overlay.querySelector('.mc-lightbox__prev');
   const counterEl = overlay.querySelector('.mc-lightbox__counter');
 
+  function setOverlayMode(mode = 'image') {
+    overlay.classList.toggle('is-video', mode === 'video');
+    if (mode !== 'video') {
+      overlay.classList.remove('is-video-portrait', 'is-video-landscape');
+    }
+  }
+
+  function updateVideoOrientation() {
+    const w = videoEl.videoWidth || 0;
+    const h = videoEl.videoHeight || 0;
+    overlay.classList.remove('is-video-portrait', 'is-video-landscape');
+    if (!w || !h) return;
+    overlay.classList.add(h > w ? 'is-video-portrait' : 'is-video-landscape');
+  }
+
+  videoEl.addEventListener('loadedmetadata', updateVideoOrientation);
+
   let lastActiveEl = null;
   let galleryItems = [];
   let currentIndex = 0;
@@ -381,6 +398,7 @@ if (contactForm) {
   function deactivateMedia() {
     imgEl.classList.remove('is-visible', 'is-exit-to-left', 'is-exit-to-right', 'is-enter-from-right', 'is-enter-from-left');
     videoEl.classList.remove('is-visible', 'is-exit-to-left', 'is-exit-to-right', 'is-enter-from-right', 'is-enter-from-left');
+    setOverlayMode('image');
     videoEl.pause();
     videoEl.removeAttribute('src');
     videoEl.removeAttribute('poster');
@@ -399,10 +417,13 @@ if (contactForm) {
 
     const assignContent = () => {
       if (activeType === 'video') {
+        setOverlayMode('video');
         videoEl.src = item.src;
         if (item.poster) videoEl.poster = item.poster;
         videoEl.setAttribute('aria-label', item.alt || 'Vídeo ampliado');
+        videoEl.load();
       } else {
+        setOverlayMode('image');
         imgEl.src = item.src;
         imgEl.alt = item.alt || 'Imagen ampliada';
       }
@@ -455,6 +476,7 @@ if (contactForm) {
     currentIndex = 0;
     isAnimating = false;
     activeType = 'image';
+    setOverlayMode('image');
     imgEl.src = '';
     imgEl.alt = '';
     deactivateMedia();
