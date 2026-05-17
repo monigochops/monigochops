@@ -1460,3 +1460,150 @@ textarea {
     max-height: 82vh;
   }
 }
+
+
+/* =========================
+   FIX DEFINITIVO LIGHTBOX MÓVIL
+   Hace que las fotos verticales se vean centradas, grandes y completas.
+   Sobrescribe reglas anteriores del lightbox.
+   ========================= */
+.mc-lightbox {
+  padding: clamp(10px, 2.5vw, 18px);
+  overflow: hidden;
+}
+
+.mc-lightbox__panel {
+  position: relative;
+  width: min(94vw, 980px);
+  height: min(88vh, 900px);
+  max-width: 94vw;
+  max-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-lightbox__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-lightbox__img,
+.mc-lightbox__video {
+  display: none;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: none;
+  touch-action: none;
+}
+
+.mc-lightbox__video {
+  background: #111;
+}
+
+.mc-lightbox__img.is-visible,
+.mc-lightbox__img.is-exit-to-left,
+.mc-lightbox__img.is-exit-to-right,
+.mc-lightbox__img.is-enter-from-right,
+.mc-lightbox__img.is-enter-from-left,
+.mc-lightbox__video.is-visible,
+.mc-lightbox__video.is-exit-to-left,
+.mc-lightbox__video.is-exit-to-right,
+.mc-lightbox__video.is-enter-from-right,
+.mc-lightbox__video.is-enter-from-left {
+  display: block;
+}
+
+.mc-lightbox__close {
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.mc-lightbox__nav {
+  z-index: 9;
+}
+
+.mc-lightbox__counter {
+  bottom: 10px;
+  z-index: 10;
+}
+
+.mc-lightbox__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  transform: translateX(-50%);
+  z-index: 8;
+  width: min(92%, 520px);
+  padding: .55rem .8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .92);
+  color: #111;
+  font-size: .82rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .mc-lightbox {
+    padding: 8px;
+  }
+
+  .mc-lightbox__panel {
+    width: 100vw;
+    height: 100dvh;
+    max-width: 100vw;
+    max-height: 100dvh;
+  }
+
+  .mc-lightbox__stage {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .mc-lightbox__img,
+  .mc-lightbox__video {
+    border-radius: 0;
+  }
+
+  .mc-lightbox__close {
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .mc-lightbox__prev {
+    left: 12px;
+  }
+
+  .mc-lightbox__next {
+    right: 12px;
+  }
+
+  .mc-lightbox__counter {
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .mc-lightbox__hint {
+    display: none;
+  }
+}
