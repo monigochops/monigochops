@@ -11,6 +11,8 @@
   <meta property="og:url" content="https://monigochops.com/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://monigochops.com/imagenes/logo.jpg">
+  <link rel="icon" href="imagenes/logoverde.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="imagenes/logoverde.jpg">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -145,7 +147,7 @@
           <button class="handmade-thumb is-active" type="button" data-type="image" data-src="imagenes/motos1.jpg" data-alt="Trabajo hecho a mano Monigochops 1">
             <img src="imagenes/motos1.jpg" alt="Miniatura trabajo hecho a mano 1">
           </button>
-          <button class="handmade-thumb" type="button" data-type="video" data-src="imagenes/motonegra.mp4" data-poster="imagenes/motos1.jpg" data-alt="Vídeo trabajo hecho a mano Monigochops 1">
+          <button class="handmade-thumb" type="button" data-type="video" data-src="imagenes/motostornillo.mp4" data-poster="imagenes/motos1.jpg" data-alt="Vídeo trabajo hecho a mano Monigochops 1">
             <img src="imagenes/motos.jpg" alt="Miniatura vídeo trabajo hecho a mano 1">
             <span class="handmade-play">▶</span>
           </button>
@@ -604,7 +606,7 @@
         <button class="add-cart">Añadir al carrito</button>
       </article>
 
-      <article class="product-card reveal" data-category="sudaderas" data-name="Chandal chica gris L" data-price="50">
+      <article class="product-card reveal" data-category="chandals" data-name="Chandal chica gris L" data-price="50">
         <div class="product-main-media">
           <img src="imagenes/vinted/CHANDALS/chandal chica gris xl/chandal chica gris xl.1.jpg" alt="Chandal chica gris L">
         </div>
@@ -618,7 +620,7 @@
         <button class="add-cart">Añadir al carrito</button>
       </article>
 
-      <article class="product-card reveal" data-category="sudaderas" data-name="Chandal gris azul xl" data-price="40">
+      <article class="product-card reveal" data-category="chandals" data-name="Chandal gris azul xl" data-price="40">
         <div class="product-main-media">
           <img src="imagenes/vinted/CHANDALS/chandal gris azul XL/chandal gris azul XL.jpg" alt="Chandal gris azul xl">
         </div>
@@ -673,9 +675,9 @@
     </div>
 
     <form id="contact-form" class="reveal">
-      <input type="text" placeholder="Nombre" required>
-      <input type="email" placeholder="Correo electrónico" required>
-      <textarea placeholder="Cuéntame qué te interesa" required></textarea>
+      <input id="contact-name" name="name" type="text" placeholder="Nombre" autocomplete="name" required>
+      <input id="contact-email" name="email" type="email" placeholder="Correo electrónico" autocomplete="email" required>
+      <textarea id="contact-message" name="message" placeholder="Cuéntame qué te interesa" required></textarea>
       <div class="contact-actions">
         <button type="submit" class="btn btn-primary">Enviar</button>
         <a class="btn btn-outline"
